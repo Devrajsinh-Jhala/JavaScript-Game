@@ -148,8 +148,14 @@ function rectangularCollision({ rectangle1, rectangle2 }) {
   );
 }
 
+// Battle Object to monitor whether battle is initiated or not
+const battle = {
+  initiated: false,
+};
+
 function animateCharacter() {
-  window.requestAnimationFrame(animateCharacter);
+  const animationId = window.requestAnimationFrame(animateCharacter);
+  console.log(animationId);
   background.draw();
   // Drawing Boudaries
   boundaries.forEach((boundary) => {
@@ -163,6 +169,12 @@ function animateCharacter() {
 
   player.draw();
   foreground.draw();
+
+  let Moving = true;
+  player.moving = false;
+  // If battle is activated player shall not move and that's what below code does!
+  console.log(animationId);
+  if (battle.initiated) return;
 
   // Battle Activation
   if (keys.w.pressed || keys.s.pressed || keys.a.pressed || keys.d.pressed) {
@@ -188,16 +200,39 @@ function animateCharacter() {
           rectangle2: battleZone,
         }) &&
         overlappingArea > (player.width * player.height) / 2 &&
-        Math.random() < 0.01
+        Math.random() < 0.015
       ) {
-        console.log("Battle Zone Collision");
+        console.log("Battle Activated");
+        // Deactivate current animation llop
+        window.cancelAnimationFrame(animationId);
+        battle.initiated = true;
+        // Transition scene animation
+        // .to is like selector which selects the HTML element
+        gsap.to("#overlappingDiv", {
+          opacity: 1,
+          repeat: 3,
+          yoyo: true,
+          duration: 0.4,
+          onComplete() {
+            gsap.to("#overlappingDiv", {
+              opacity: 1,
+              duration: 0.4,
+              onComplete() {
+                // Activate a new animation loop
+                animateBattle();
+                gsap.to("#overlappingDiv", {
+                  opacity: 0,
+                  duration: 0.4,
+                });
+              },
+            });
+          },
+        });
         break;
       }
     }
   }
 
-  let Moving = true;
-  player.moving = false;
   // Moves Up
   if (keys.w.pressed && lastKey === "w") {
     player.moving = true;
@@ -342,7 +377,26 @@ function animateCharacter() {
   }
 }
 
-animateCharacter();
+// animateCharacter();
+
+// Setting up the battle background
+const battleBackgroundImage = new Image();
+battleBackgroundImage.src = "./Map and Game Assets/battleBackground.png";
+
+const batttleBackground = new Sprite({
+  position: {
+    x: 0,
+    y: 0,
+  },
+  image: battleBackgroundImage,
+});
+// Battle Animation function
+function animateBattle() {
+  window.requestAnimationFrame(animateBattle);
+  batttleBackground.draw();
+}
+
+animateBattle();
 
 // Moving player when user presses the key
 // Listening for the last key pressed
