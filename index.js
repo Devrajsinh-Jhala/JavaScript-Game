@@ -91,6 +91,7 @@ const player = new Sprite({
   image: playerImage,
   frames: {
     max: 4,
+    hold: 10,
   },
   sprites: {
     up: playerUpImage,
@@ -171,7 +172,7 @@ function animateCharacter() {
   foreground.draw();
 
   let Moving = true;
-  player.moving = false;
+  player.animate = false;
   // If battle is activated player shall not move and that's what below code does!
   console.log(animationId);
   if (battle.initiated) return;
@@ -235,7 +236,7 @@ function animateCharacter() {
 
   // Moves Up
   if (keys.w.pressed && lastKey === "w") {
-    player.moving = true;
+    player.animate = true;
     player.image = player.sprites.up;
     for (let i = 0; i < boundaries.length; i++) {
       // Detecting for Collisions
@@ -266,7 +267,7 @@ function animateCharacter() {
   }
   // Moves Left
   else if (keys.a.pressed && lastKey === "a") {
-    player.moving = true;
+    player.animate = true;
     player.image = player.sprites.left;
     for (let i = 0; i < boundaries.length; i++) {
       // Detecting for Collisions
@@ -296,7 +297,7 @@ function animateCharacter() {
   }
   // Moves Down
   else if (keys.s.pressed && lastKey === "s") {
-    player.moving = true;
+    player.animate = true;
     player.image = player.sprites.down;
     for (let i = 0; i < boundaries.length; i++) {
       // Detecting for Collisions
@@ -347,7 +348,7 @@ function animateCharacter() {
   }
   // Moves Right
   else if (keys.d.pressed && lastKey === "d") {
-    player.moving = true;
+    player.animate = true;
     player.image = player.sprites.right;
     for (let i = 0; i < boundaries.length; i++) {
       // Detecting for Collisions
@@ -390,10 +391,44 @@ const batttleBackground = new Sprite({
   },
   image: battleBackgroundImage,
 });
+
+const draggleImage = new Image();
+draggleImage.src = "./Map and Game Assets/draggleSprite.png";
+
+const draggle = new Sprite({
+  position: {
+    x: 800,
+    y: 100,
+  },
+  image: draggleImage,
+  frames: {
+    max: 4,
+    hold: 30,
+  },
+  animate: true,
+});
+
+const embyImage = new Image();
+embyImage.src = "./Map and Game Assets/embySprite.png";
+
+const emby = new Sprite({
+  position: {
+    x: 280,
+    y: 325,
+  },
+  image: embyImage,
+  frames: {
+    max: 4,
+    hold: 30,
+  },
+  animate: true,
+});
 // Battle Animation function
 function animateBattle() {
   window.requestAnimationFrame(animateBattle);
   batttleBackground.draw();
+  draggle.draw();
+  emby.draw();
 }
 
 animateBattle();
