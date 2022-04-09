@@ -406,6 +406,7 @@ const draggle = new Sprite({
     hold: 30,
   },
   animate: true,
+  isEnemy: true,
 });
 
 const embyImage = new Image();
@@ -432,6 +433,20 @@ function animateBattle() {
 }
 
 animateBattle();
+
+// Attacks for the Character
+document.querySelectorAll("button").forEach((button) => {
+  button.addEventListener("click", () => {
+    emby.attack({
+      attack: {
+        name: "Tackle",
+        damage: 10,
+        type: "Normal",
+      },
+      recipient: draggle,
+    });
+  });
+});
 
 // Moving player when user presses the key
 // Listening for the last key pressed

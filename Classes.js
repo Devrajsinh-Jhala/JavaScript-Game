@@ -5,6 +5,7 @@ class Sprite {
     frames = { max: 1, hold: 10 },
     sprites,
     animate = false,
+    isEnemy = false,
   }) {
     this.position = position;
     this.image = image;
@@ -17,10 +18,15 @@ class Sprite {
     // Only when we press any key to move
     this.animate = animate;
     this.sprites = sprites;
+    this.opacity = 1;
+    this.health = 100;
+    this.isEnemy = isEnemy;
   }
 
   // Draw method to render an image
   draw() {
+    c.save();
+    c.globalAlpha = this.opacity;
     c.drawImage(
       this.image,
       this.frames.val * this.width, // This and below zero is for Crop starting point
@@ -32,6 +38,7 @@ class Sprite {
       this.image.width / this.frames.max, // Size of image
       this.image.height
     );
+    c.restore();
 
     // Moving Animation
     if (!this.animate) return;
@@ -44,6 +51,49 @@ class Sprite {
       if (this.frames.val < this.frames.max - 1) this.frames.val++;
       else this.frames.val = 0;
     }
+  }
+
+  attack({ attack, recipient }) {
+    const timeline = gsap.timeline();
+
+    this.health -= attack.damage;
+
+    let movementDistance = 20;
+    if (this.isEnemy) movementDistance = -20;
+
+    let healthBar = "#draggleHealthBar";
+    if (this.isEnemy) healthBar = "#playerHealthBar";
+
+    timeline
+      .to(this.position, {
+        x: this.position.x - movementDistance,
+      })
+      .to(this.position, {
+        x: this.position.x + movementDistance,
+        duration: 0.2,
+        onComplete: () => {
+          // Enemy actually gets hit so here we decrease the health bar
+          gsap.to(healthBar, {
+            width: this.health + "%",
+          });
+          gsap.to(recipient.position, {
+            x: recipient.position.x + 10,
+            yoyo: true,
+            repeat: 5,
+            duration: 0.08,
+          });
+
+          gsap.to(recipient, {
+            opacity: 0,
+            repeat: 5,
+            yoyo: true,
+            duration: 0.1,
+          });
+        },
+      })
+      .to(this.position, {
+        x: this.position.x,
+      });
   }
 }
 
