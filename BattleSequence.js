@@ -42,7 +42,6 @@ function initBattle() {
   // Our event listeners for our buttons (attack)
   document.querySelectorAll("button").forEach((button) => {
     button.addEventListener("click", (e) => {
-      // console.log(e.currentTarget.innerHTML);
       const selectedAttack = attacks[e.currentTarget.innerHTML];
       emby.attack({
         attack: selectedAttack,
@@ -120,7 +119,6 @@ function animateBattle() {
   battleAnimationId = window.requestAnimationFrame(animateBattle);
   batttleBackground.draw();
 
-  // console.log(battleAnimationId);
   renderedSprites.forEach((sprite) => {
     sprite.draw();
   });

@@ -33,6 +33,12 @@
 
 ✅ If you have some variables whose values will be changed later then use **Classes** to improve **Code Quality** and to write **Clean Code**.
 
+<br>
+
+### ❓ What is Context:
+
+✅ The CanvasRenderingContext2D interface, part of the Canvas API, provides the 2D rendering context for the drawing surface of a canvas element. It is used for drawing shapes, text, images, and other objects.
+
 <hr>
 
 ## **Problems Faced(❌) and How I Solved(✅)**:

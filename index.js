@@ -1,8 +1,10 @@
+// Selecting Canvas Element
 const canvas = document.querySelector("canvas");
 
 // Here c is context
 const c = canvas.getContext("2d");
 
+// Setting up the Height and Width of Canvas
 canvas.width = 1024;
 canvas.height = 576;
 
@@ -16,8 +18,6 @@ const battleZonesMap = [];
 for (let i = 0; i < battleZonesData.length; i += 70) {
   battleZonesMap.push(battleZonesData.slice(i, 70 + i));
 }
-
-// console.log(battleZonesData);
 
 const boundaries = [];
 const offset = {
@@ -56,11 +56,10 @@ battleZonesMap.forEach((row, i) => {
   });
 });
 
-// console.log(battleZones);
-
 // Inserting the map
 // You can't just pass the path as string in draw image, hence we first create an object for the image.
 
+// Our Map Image
 const image = new Image();
 image.src = "./Map and Game Assets/Pellet Town.png";
 
@@ -156,7 +155,6 @@ const battle = {
 
 function animateCharacter() {
   const animationId = window.requestAnimationFrame(animateCharacter);
-  // console.log(animationId);
   background.draw();
   // Drawing Boudaries
   boundaries.forEach((boundary) => {
@@ -174,7 +172,6 @@ function animateCharacter() {
   let Moving = true;
   player.animate = false;
   // If battle is activated player shall not move and that's what below code does!
-  // console.log(animationId);
   if (battle.initiated) return;
 
   // Battle Activation
@@ -203,7 +200,6 @@ function animateCharacter() {
         overlappingArea > (player.width * player.height) / 2 &&
         Math.random() < 0.015
       ) {
-        // console.log("Battle Activated");
         // Deactivate current animation loop
         window.cancelAnimationFrame(animationId);
 
@@ -258,7 +254,6 @@ function animateCharacter() {
           },
         })
       ) {
-        // console.log("collision");
         Moving = false;
         break;
       }
@@ -289,7 +284,6 @@ function animateCharacter() {
           },
         })
       ) {
-        // console.log("collision");
         Moving = false;
         break;
       }
@@ -319,7 +313,6 @@ function animateCharacter() {
           },
         })
       ) {
-        // console.log("collision");
         Moving = false;
         break;
       }
@@ -342,7 +335,6 @@ function animateCharacter() {
               },
             })
           ) {
-            // console.log("collision");
             Moving = false;
             break;
           }
@@ -370,7 +362,6 @@ function animateCharacter() {
           },
         })
       ) {
-        // console.log("collision");
         Moving = false;
         break;
       }
@@ -407,7 +398,6 @@ window.addEventListener("keydown", (e) => {
       lastKey = "d";
       break;
   }
-  // console.log(keys);
 });
 
 window.addEventListener("keyup", (e) => {
@@ -425,7 +415,6 @@ window.addEventListener("keyup", (e) => {
       keys.d.pressed = false;
       break;
   }
-  // console.log(keys);
 });
 
 let clicked = false;
