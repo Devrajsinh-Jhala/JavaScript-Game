@@ -220,6 +220,7 @@ function animateCharacter() {
               duration: 0.4,
               onComplete() {
                 // Activate a new animation loop
+                initBattle();
                 animateBattle();
                 gsap.to("#overlappingDiv", {
                   opacity: 0,
@@ -379,8 +380,6 @@ function animateCharacter() {
 }
 
 // animateCharacter();
-
-
 
 // Moving player when user presses the key
 // Listening for the last key pressed
