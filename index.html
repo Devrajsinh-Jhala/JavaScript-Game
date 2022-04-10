@@ -49,7 +49,7 @@
   <!-- Canvas to render our game -->
   <canvas> </canvas>
   <!-- Represents health bar of Draggle -->
-  <div id="userInterface">
+  <div id="userInterface" style="display: none">
     <div
       style="
         background-color: white;
@@ -161,6 +161,13 @@
 </div>
 
 <!-- Javascript Files -->
+<!-- Importing HowlerJS for audio -->
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"
+  integrity="sha512-6+YN/9o9BWrk6wSfGxQGpt3EUK6XeHi6yeHV+TYD2GR0Sj/cggRpXr1BrAQf0as6XslxomMUxXp2vIl+fv0QRA=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+></script>
 <!-- Importing gsap animation library -->
 <script
   src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"
@@ -168,7 +175,7 @@
   crossorigin="anonymous"
   referrerpolicy="no-referrer"
 ></script>
-
+<script src="Data/Audio.js"></script>
 <script src="Data/BattleZones.js"></script>
 <script src="Data/Collisions.js"></script>
 <script src="Data/Attacks.js"></script>

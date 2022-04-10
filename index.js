@@ -156,7 +156,7 @@ const battle = {
 
 function animateCharacter() {
   const animationId = window.requestAnimationFrame(animateCharacter);
-  console.log(animationId);
+  // console.log(animationId);
   background.draw();
   // Drawing Boudaries
   boundaries.forEach((boundary) => {
@@ -174,7 +174,7 @@ function animateCharacter() {
   let Moving = true;
   player.animate = false;
   // If battle is activated player shall not move and that's what below code does!
-  console.log(animationId);
+  // console.log(animationId);
   if (battle.initiated) return;
 
   // Battle Activation
@@ -203,9 +203,13 @@ function animateCharacter() {
         overlappingArea > (player.width * player.height) / 2 &&
         Math.random() < 0.015
       ) {
-        console.log("Battle Activated");
-        // Deactivate current animation llop
+        // console.log("Battle Activated");
+        // Deactivate current animation loop
         window.cancelAnimationFrame(animationId);
+
+        audio.Map.stop();
+        audio.initBattle.play();
+        audio.battle.play();
         battle.initiated = true;
         // Transition scene animation
         // .to is like selector which selects the HTML element
@@ -254,7 +258,7 @@ function animateCharacter() {
           },
         })
       ) {
-        console.log("collision");
+        // console.log("collision");
         Moving = false;
         break;
       }
@@ -285,7 +289,7 @@ function animateCharacter() {
           },
         })
       ) {
-        console.log("collision");
+        // console.log("collision");
         Moving = false;
         break;
       }
@@ -315,7 +319,7 @@ function animateCharacter() {
           },
         })
       ) {
-        console.log("collision");
+        // console.log("collision");
         Moving = false;
         break;
       }
@@ -338,7 +342,7 @@ function animateCharacter() {
               },
             })
           ) {
-            console.log("collision");
+            // console.log("collision");
             Moving = false;
             break;
           }
@@ -366,7 +370,7 @@ function animateCharacter() {
           },
         })
       ) {
-        console.log("collision");
+        // console.log("collision");
         Moving = false;
         break;
       }
@@ -422,4 +426,12 @@ window.addEventListener("keyup", (e) => {
       break;
   }
   // console.log(keys);
+});
+
+let clicked = false;
+addEventListener("click", () => {
+  if (!clicked) {
+    audio.Map.play();
+    clicked = true;
+  }
 });

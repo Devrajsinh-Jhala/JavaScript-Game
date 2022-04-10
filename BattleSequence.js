@@ -42,7 +42,7 @@ function initBattle() {
   // Our event listeners for our buttons (attack)
   document.querySelectorAll("button").forEach((button) => {
     button.addEventListener("click", (e) => {
-      console.log(e.currentTarget.innerHTML);
+      // console.log(e.currentTarget.innerHTML);
       const selectedAttack = attacks[e.currentTarget.innerHTML];
       emby.attack({
         attack: selectedAttack,
@@ -66,6 +66,7 @@ function initBattle() {
                 opacity: 0,
               });
               battle.initiated = false;
+              audio.Map.play();
             },
           });
         });
@@ -98,6 +99,7 @@ function initBattle() {
                   opacity: 0,
                 });
                 battle.initiated = false;
+                audio.Map.play();
               },
             });
           });
@@ -118,14 +120,15 @@ function animateBattle() {
   battleAnimationId = window.requestAnimationFrame(animateBattle);
   batttleBackground.draw();
 
-  console.log(battleAnimationId);
+  // console.log(battleAnimationId);
   renderedSprites.forEach((sprite) => {
     sprite.draw();
   });
 }
 
-initBattle();
-animateBattle();
+animateCharacter();
+// initBattle();
+// animateBattle();
 
 document.querySelector("#dialogueBox").addEventListener("click", (e) => {
   if (queue.length > 0) {
