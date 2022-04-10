@@ -10,42 +10,18 @@ const batttleBackground = new Sprite({
   image: battleBackgroundImage,
 });
 
-const draggleImage = new Image();
-draggleImage.src = "./Map and Game Assets/draggleSprite.png";
+const draggle = new Monster(monsters.Draggle);
 
-const draggle = new Sprite({
-  position: {
-    x: 800,
-    y: 100,
-  },
-  image: draggleImage,
-  frames: {
-    max: 4,
-    hold: 30,
-  },
-  animate: true,
-  isEnemy: true,
-  name: "Draggle",
-});
-
-const embyImage = new Image();
-embyImage.src = "./Map and Game Assets/embySprite.png";
-
-const emby = new Sprite({
-  position: {
-    x: 280,
-    y: 325,
-  },
-  image: embyImage,
-  frames: {
-    max: 4,
-    hold: 30,
-  },
-  animate: true,
-  name: "Emby",
-});
+const emby = new Monster(monsters.Emby);
 
 const renderedSprites = [draggle, emby];
+
+emby.attacks.forEach((attack) => {
+  const button = document.createElement("button");
+  button.innerHTML = attack.name;
+  document.querySelector("#attacksBox").append(button);
+});
+
 // Battle Animation function
 function animateBattle() {
   window.requestAnimationFrame(animateBattle);
@@ -72,21 +48,22 @@ document.querySelectorAll("button").forEach((button) => {
       renderedSprites,
     });
 
-    queue.push(() => {
-      draggle.attack({
-        attack: attacks.Tackle,
-        recipient: emby,
-        renderedSprites,
-      });
-    });
+    const randomAttack =
+      draggle.attacks[Math.floor(Math.random() * draggle.attacks.length)];
 
     queue.push(() => {
       draggle.attack({
-        attack: attacks.Ember,
+        attack: randomAttack,
         recipient: emby,
         renderedSprites,
       });
     });
+  });
+
+  button.addEventListener("mouseenter", (e) => {
+    const selectedAttack = attacks[e.currentTarget.innerHTML];
+    document.querySelector("#attackType").innerHTML = selectedAttack.type;
+    document.querySelector("#attackType").style.color = selectedAttack.color;
   });
 });
 
